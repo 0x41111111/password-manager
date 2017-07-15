@@ -1,0 +1,8 @@
+#item-container {
+  min-height: 100vh;
+  padding: 1em;
+}
+
+.action-critical > span {
+  color: #db2828;
+}
