@@ -4,7 +4,6 @@ import { Sidebar, Menu, Segment } from 'semantic-ui-react';
 import { PasswordEntryContainer } from 'ui/entry';
 import { CategoryContainer } from 'ui/category';
 import { ActionContainer } from 'ui/menu';
-import { EntryModal } from 'ui/modal/entry';
 
 import './app.css';
 

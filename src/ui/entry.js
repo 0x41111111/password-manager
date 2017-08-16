@@ -31,29 +31,24 @@ export class PasswordEntry extends Component {
 };
 
 class EntryContainer extends Component {
-  constructor(props) {
-    super(props);
-    let entriesToRender = [];
-
-    for (var e in props.entries) {
-      if (props.entries.hasOwnProperty(e)) {
-        var entry = props.entries[e];
-        entriesToRender.push(<PasswordEntry login={entry.login} name={entry.name} />)
-      }
-    }
-
-    this.state = { entries: entriesToRender };
-  }
-
   static propTypes = {
     entries: PropTypes.array.isRequired
   };
 
   render() {
+    let entriesToRender = [];
+
+    for (const e in this.props.entries) {
+      if (this.props.entries.hasOwnProperty(e)) {
+        const entry = this.props.entries[e];
+        entriesToRender.push(<PasswordEntry key={entry.id} login={entry.login} name={entry.name} />)
+      }
+    }
+
     return (
       <div id="item-container">
         <Card.Group>
-          {this.state.entries}
+          {entriesToRender}
         </Card.Group>
       </div>
     );

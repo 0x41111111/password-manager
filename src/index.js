@@ -11,8 +11,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 // Used to satisfy Reactotron. Will be removed when other middleware functions are added.
 const noop = store => next => action => {
-  let result = next(action)
-  return result
+  return next(action)
 }
 
 const middleware = applyMiddleware(noop);

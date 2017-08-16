@@ -8,7 +8,7 @@ function ui(state = { authenticated: false }, action) {
 };
 
 export function entries(state = [], action) {
-  let newState = state;
+  let newState = [...state];
 
   switch (action.type) {
     case entryActions.upsert:
@@ -30,7 +30,7 @@ export function entries(state = [], action) {
 };
 
 export function categories(state = [], action) {
-  let newState = state;
+  let newState = [...state];
 
   switch (action.type) {
     case categoryActions.upsert:
