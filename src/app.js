@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { Sidebar, Menu, Segment, Icon } from 'semantic-ui-react';
+import { Sidebar, Menu, Segment } from 'semantic-ui-react';
 
 import { PasswordEntryContainer } from 'ui/entry';
 import { CategoryContainer } from 'ui/category';
+import { ActionContainer } from 'ui/menu';
+import { EntryModal } from 'ui/modal/entry';
+
 import './app.css';
 
 class App extends Component {
@@ -12,16 +15,7 @@ class App extends Component {
         <Sidebar.Pushable as={Segment}>
           <Sidebar as={Menu} visible vertical direction='left'>
             <CategoryContainer />
-            <div id="actions">
-              <Menu.Item name="action_settings">
-                <Icon name="settings" />
-                Settings
-              </Menu.Item>
-              <Menu.Item name="action_lock" className="action-critical">
-                <Icon name="lock" color="red" />
-                <span>Lock Container</span>
-              </Menu.Item>
-            </div>
+            <ActionContainer />
           </Sidebar>
           <Sidebar.Pusher>
             <PasswordEntryContainer />

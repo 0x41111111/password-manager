@@ -3,7 +3,7 @@ import reject from 'lodash.reject';
 
 import { entryActions, categoryActions } from 'state/action-names';
 
-function ui(state = { authenticated: true }, action) {
+function ui(state = { authenticated: false }, action) {
   return state;
 };
 
