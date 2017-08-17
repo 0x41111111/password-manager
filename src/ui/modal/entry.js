@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Button, Form, Header, Icon, Modal } from 'semantic-ui-react';
 
 import { upsertPasswordEntry, deletePasswordEntry } from 'state/actions/entry';
+import { ConfirmDeleteModal } from 'ui/modal/delete-confirm';
 
 // Allows a password entry to be created or updated.
 // TODO/nice to have: change the label beside the login field to match the contents
@@ -28,6 +29,7 @@ class EntryModal extends Component {
     this.changeHandler = this.changeHandler.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.onBeforeSave = this.onBeforeSave.bind(this);
+    this.confirmDelete = this.confirmDelete.bind(this);
   };
 
   changeHandler(event) {
@@ -56,6 +58,10 @@ class EntryModal extends Component {
     this.props.onClose();
   };
 
+  confirmDelete() {
+    this.props.dispatch(deletePasswordEntry(this.state.id))
+  };
+
   render() {
     return (
       <div>
@@ -69,6 +75,9 @@ class EntryModal extends Component {
             <Button basic color='red' onClick={this.props.onClose}>Yes</Button>
           </Modal.Actions>
         </Modal>
+        <ConfirmDeleteModal shouldOpen={this.state._deletePromptVisible}
+          onDismissed={() => this.setState({ _deletePromptVisible: false })}
+          onDeleteConfirmed={this.confirmDelete} />
         <Modal defaultOpen={true} closeOnDimmerClick={false} onClose={this.handleClose}>
           <Modal.Header>
             {this.state._title}
@@ -93,7 +102,9 @@ class EntryModal extends Component {
             <Button color="grey" onClick={this.handleClose}>
               <Icon name="close" /> Cancel
             </Button>
-            <Button color="red" disabled={!this.props.entryID}>
+            <Button color="red" 
+              onClick={() => this.setState({ _deletePromptVisible: true })} 
+              disabled={!this.props.entryID}>
               <Icon name="trash" /> Delete
             </Button>
           </Modal.Actions>
