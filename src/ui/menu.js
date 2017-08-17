@@ -2,17 +2,22 @@ import React, { Component } from 'react';
 import { Icon, Menu } from 'semantic-ui-react';
 
 import { EntryModal } from 'ui/modal/entry';
+import { SettingsModal } from 'ui/modal/settings';
 
 export class ActionContainer extends Component {
-  state = { modal: undefined };
+  state = {
+    modal: undefined,
+    showSettingsModal: false
+  };
 
   constructor(props) {
     super(props);
     this.toggleEntryModal = this.toggleEntryModal.bind(this);
   };
 
+  // The new entry modal is recreated after use rather than made invisible so that all the data from the previous entry is gone.
   toggleEntryModal() {
-    this.state.modal ? this.setState({ modal: undefined }) : this.setState({ modal: <EntryModal onClose={this.toggleEntryModal} /> });
+    this.state.modal ? this.setState({ entryModal: undefined }) : this.setState({ entryModal: <EntryModal onClose={this.toggleEntryModal} /> });
   };
 
   render() {
@@ -21,14 +26,15 @@ export class ActionContainer extends Component {
         <Menu.Item name="action_new_entry" onClick={this.toggleEntryModal}>
           <Icon name="add" /> New Entry...
         </Menu.Item>
-        <Menu.Item name="action_settings">
+        <Menu.Item name="action_settings" onClick={() => this.setState({ showSettingsModal: true })}>
           <Icon name="settings" /> Settings
         </Menu.Item>
         <Menu.Item name="action_lock" className="action-critical">
           <Icon name="lock" color="red" />
           <span>Lock Container</span>
         </Menu.Item>
-        {this.state.modal}
+        {this.state.entryModal}
+        <SettingsModal />
       </div>
     );
   }

@@ -3,8 +3,18 @@ import reject from 'lodash.reject';
 
 import { entryActions, categoryActions } from 'state/action-names';
 
-function ui(state = { authenticated: false }, action) {
-  return state;
+function ui(state = {}, action) {
+  let newState = { ...state };
+
+  switch (action.type) {
+    case "UI_ENABLE_DEVELOPMENT_MODE":
+      newState.dev = true;
+      break;
+    default:
+      break;
+  };
+
+  return newState;
 };
 
 export function entries(state = [], action) {
