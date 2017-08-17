@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button, Header, Modal, Tab } from 'semantic-ui-react';
-
-import { PasswordGeneratorPopup } from 'ui/popup/password-generator';
+import { Header, Modal, Tab } from 'semantic-ui-react';
 
 class DevToolsPane extends Component {
   render() {
@@ -12,9 +10,6 @@ class DevToolsPane extends Component {
         <Header size="medium">Test Components</Header>
         <p>Use this section to test components before they're wired up to their intended components</p>
         <br />
-        <PasswordGeneratorPopup trigger={
-          <Button icon='settings' label='Open Password Generator' />
-        } onAccepted={(p) => console.log(p)} />
       </Tab.Pane>
     );
   };
@@ -33,7 +28,7 @@ class SettingsModal extends Component {
 
   render() {
     return (
-      <Modal open={true}>
+      <Modal open={this.props.open} onClose={this.props.onClose} closeIcon='close'>
         <Modal.Content>
           <Tab menu={{ pointing: true, secondary: true }} panes={this.tabPanes} />
         </Modal.Content>
@@ -42,7 +37,9 @@ class SettingsModal extends Component {
   };
 
   static propTypes = {
-    devMode: PropTypes.bool.isRequired
+    devMode: PropTypes.bool.isRequired,
+    open: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired
   };
 };
 const wrapped = connect(state => ({ devMode: state.ui.dev }))(SettingsModal);

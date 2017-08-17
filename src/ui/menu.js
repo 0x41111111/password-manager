@@ -6,7 +6,7 @@ import { SettingsModal } from 'ui/modal/settings';
 
 export class ActionContainer extends Component {
   state = {
-    modal: undefined,
+    entryModal: undefined,
     showSettingsModal: false
   };
 
@@ -15,9 +15,9 @@ export class ActionContainer extends Component {
     this.toggleEntryModal = this.toggleEntryModal.bind(this);
   };
 
-  // The new entry modal is recreated after use rather than made invisible so that all the data from the previous entry is gone.
+  // The new entry modal is recreated after each use rather than made invisible so that all the data from the previous entry is gone.
   toggleEntryModal() {
-    this.state.modal ? this.setState({ entryModal: undefined }) : this.setState({ entryModal: <EntryModal onClose={this.toggleEntryModal} /> });
+    this.state.entryModal ? this.setState({ entryModal: undefined }) : this.setState({ entryModal: <EntryModal onClose={this.toggleEntryModal} /> });
   };
 
   render() {
@@ -34,7 +34,7 @@ export class ActionContainer extends Component {
           <span>Lock Container</span>
         </Menu.Item>
         {this.state.entryModal}
-        <SettingsModal />
+        <SettingsModal open={this.state.showSettingsModal} onClose={() => this.setState({ showSettingsModal: false })} />
       </div>
     );
   }

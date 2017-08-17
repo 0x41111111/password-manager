@@ -5,6 +5,7 @@ import { Button, Form, Header, Icon, Modal } from 'semantic-ui-react';
 
 import { upsertPasswordEntry, deletePasswordEntry } from 'state/actions/entry';
 import { ConfirmDeleteModal } from 'ui/modal/delete-confirm';
+import { PasswordGeneratorPopup } from 'ui/popup/password-generator';
 
 // Allows a password entry to be created or updated.
 // TODO/nice to have: change the label beside the login field to match the contents
@@ -93,6 +94,9 @@ class EntryModal extends Component {
               <Form.Input type="password" name="password" label="Password"
                 placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
                 value={this.state.password} onChange={this.changeHandler} />
+              <PasswordGeneratorPopup trigger={
+                <Button icon='settings' label='Generate' />
+              } onAccepted={(p) => this.setState({ password: p })} />
             </Form>
           </Modal.Content>
           <Modal.Actions>
@@ -102,8 +106,8 @@ class EntryModal extends Component {
             <Button color="grey" onClick={this.handleClose}>
               <Icon name="close" /> Cancel
             </Button>
-            <Button color="red" 
-              onClick={() => this.setState({ _deletePromptVisible: true })} 
+            <Button color="red"
+              onClick={() => this.setState({ _deletePromptVisible: true })}
               disabled={!this.props.entryID}>
               <Icon name="trash" /> Delete
             </Button>
