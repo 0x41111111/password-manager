@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Icon, Menu } from 'semantic-ui-react';
+import { withRouter } from 'react-router';
 
 import { EntryModal } from 'ui/modal/entry';
 import { SettingsModal } from 'ui/modal/settings';
 
-export class ActionContainer extends Component {
+class ActionContainer extends Component {
   state = {
     entryModal: undefined,
     showSettingsModal: false
@@ -12,12 +13,19 @@ export class ActionContainer extends Component {
 
   constructor(props) {
     super(props);
+
     this.toggleEntryModal = this.toggleEntryModal.bind(this);
+    this.cleanupAndLock = this.cleanupAndLock.bind(this);
   };
 
   // The new entry modal is recreated after each use rather than made invisible so that all the data from the previous entry is gone.
   toggleEntryModal() {
     this.state.entryModal ? this.setState({ entryModal: undefined }) : this.setState({ entryModal: <EntryModal onClose={this.toggleEntryModal} /> });
+  };
+
+  cleanupAndLock() {
+    console.warn("UNIMPLEMENTED: the state needs to be saved remotely and wiped out locally");
+    this.props.history.push('/');
   };
 
   render() {
@@ -29,7 +37,7 @@ export class ActionContainer extends Component {
         <Menu.Item name="action_settings" onClick={() => this.setState({ showSettingsModal: true })}>
           <Icon name="settings" /> Settings
         </Menu.Item>
-        <Menu.Item name="action_lock" className="action-critical">
+        <Menu.Item name="action_lock" className="action-critical" onClick={this.cleanupAndLock}>
           <Icon name="lock" color="red" />
           <span>Lock Container</span>
         </Menu.Item>
@@ -39,3 +47,6 @@ export class ActionContainer extends Component {
     );
   }
 };
+
+const wrapped = withRouter(ActionContainer);
+export { wrapped as ActionContainer };

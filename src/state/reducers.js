@@ -1,14 +1,17 @@
 import { combineReducers } from 'redux';
 import reject from 'lodash.reject';
 
-import { entryActions, categoryActions } from 'state/action-names';
+import { entryActions, categoryActions, authActions } from 'state/action-names';
 
-function ui(state = {}, action) {
+function config(state = {}, action) {
   let newState = { ...state };
 
   switch (action.type) {
     case "UI_ENABLE_DEVELOPMENT_MODE":
       newState.dev = true;
+      break;
+    case authActions.setAuthStatus:
+      newState.authenticated = true;
       break;
     default:
       break;
@@ -63,4 +66,4 @@ export function categories(state = [], action) {
 
 const container = combineReducers({ entries, categories });
 
-export default combineReducers({ ui, container });
+export default combineReducers({ config, container });

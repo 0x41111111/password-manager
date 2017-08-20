@@ -3,6 +3,12 @@
   padding: 1em;
 }
 
+#open {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .action-critical > span {
   color: #db2828;
 }

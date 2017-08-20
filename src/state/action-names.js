@@ -7,3 +7,7 @@ export const categoryActions = {
   upsert: "CATEGORY_UPSERT",
   delete: "CATEGORY_DELETE"
 };
+
+export const authActions = {
+  setAuthStatus: "AUTH_SET_STATUS"
+};

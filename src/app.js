@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Sidebar, Menu, Segment } from 'semantic-ui-react';
+import { Route } from 'react-router';
 
-import { PasswordEntryContainer } from 'ui/entry';
-import { CategoryContainer } from 'ui/category';
-import { ActionContainer } from 'ui/menu';
+import { PasswordManager } from 'ui/root/manager';
+import { OpenContainer } from 'ui/root/open';
 
 import './app.css';
 
@@ -11,15 +10,8 @@ class App extends Component {
   render() {
     return (
       <div id="app">
-        <Sidebar.Pushable as={Segment}>
-          <Sidebar as={Menu} visible vertical direction='left'>
-            <CategoryContainer />
-            <ActionContainer />
-          </Sidebar>
-          <Sidebar.Pusher>
-            <PasswordEntryContainer />
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
+        <Route path='/' component={OpenContainer} />
+        <Route path='/container/:provider/:id' component={PasswordManager} />
       </div>
     );
   }

@@ -42,6 +42,6 @@ class SettingsModal extends Component {
     onClose: PropTypes.func.isRequired
   };
 };
-const wrapped = connect(state => ({ devMode: state.ui.dev }))(SettingsModal);
+const wrapped = connect(state => ({ devMode: state.config.dev }))(SettingsModal);
 
 export { wrapped as SettingsModal };
