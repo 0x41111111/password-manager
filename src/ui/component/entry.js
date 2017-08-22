@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Card, Icon } from 'semantic-ui-react';
+import { Card, Divider, Icon, Input, Popup } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 import { ConfirmDeleteModal } from 'ui/modal/delete-confirm';
@@ -10,19 +10,83 @@ import { deletePasswordEntry } from 'state/actions/entry';
 export class PasswordEntry extends Component {
   state = {
     hasRequestedDelete: false,
-    hasRequestedEdit: false
+    hasRequestedEdit: false,
+    hasRequestedReveal: false,
+    revealText: "View/Copy Password"
   };
 
   constructor(props) {
     super(props);
     this.confirmDelete = this.confirmDelete.bind(this);
+    this.copyPassword = this.copyPassword.bind(this);
+
+    // HACK: Safari returns `true` for queryCommandSupported with 'copy' as an argument.
+    // thus, Safari is manually tested for.
+    this.doesNotSupportCopying = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
   };
 
   confirmDelete() {
     this.props.dispatchDelete(this.props.entry.id);
   };
 
+  // TODO: is there a better way of doing this apart from raw HTML element creation?
+  copyPassword() {
+    const textArea = document.createElement("textarea");
+    // make the text area invisible
+    textArea.style.position = 'fixed';
+    textArea.style.top = 0;
+    textArea.style.left = 0;
+    textArea.style.width = '2em';
+    textArea.style.height = '2em';
+    textArea.style.padding = 0;
+    textArea.style.border = 'none';
+    textArea.style.outline = 'none';
+    textArea.style.boxShadow = 'none';
+    textArea.style.background = 'transparent';
+
+    // put the password in the text area
+    textArea.value = this.props.entry.password;
+
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    try {
+      console.log("copying");
+      const result = document.execCommand('copy');
+
+      if (!result) {
+        console.error('copy failed');
+        return;
+      }
+
+      console.log("copied");
+    } catch (e) {
+      console.error("copy failed: " + e);
+      alert("TODO: user-visible error??");
+    }
+
+    this.setState({ revealText: "Copied!" }, () => {
+      setTimeout(() => this.setState({ revealText: "View/Copy Password" }), 2500);
+    })
+
+    document.body.removeChild(textArea);
+    this.setState({ hasRequestedReveal: false });
+  };
+
   render() {
+    const reveal = (
+      <a className="left floated">
+        {this.state.revealText} <Icon name="eye" />
+      </a>
+    );
+
+    const noCopyingExplanation = (
+      <div>
+        <Divider />
+        <p>Automatic copying is not supported on this platform or browser.</p>
+      </div>
+    );
+
     return (
       <Card>
         <Card.Content>
@@ -36,9 +100,16 @@ export class PasswordEntry extends Component {
             onDeleteConfirmed={this.confirmDelete} />
         </Card.Content>
         <Card.Content extra>
-          <span className="left floated">
-            Copy Password <Icon name="copy" />
-          </span>
+          <Popup trigger={reveal} on='click'
+            open={this.state.hasRequestedReveal}
+            onOpen={() => { this.setState({ hasRequestedReveal: true }); this.copyPassword() }}
+            onClose={() => this.setState({ hasRequestedReveal: false })}>
+            <Input
+              id={this.revealedEntryIDPrefix + this.props.entry.id}
+              action={this.copyAction}
+              disabled value={this.props.entry.password} size='mini' />
+            {this.doesNotSupportCopying ? noCopyingExplanation : undefined}
+          </Popup>
           <a className="right floated" onClick={() => this.setState({ hasRequestedEdit: true })}>
             Edit <Icon name="edit" />
           </a>

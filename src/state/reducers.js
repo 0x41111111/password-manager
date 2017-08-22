@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import reject from 'lodash.reject';
 
-import { entryActions, categoryActions, authActions } from 'state/action-names';
+import { entryActions, categoryActions, authActions, containerActions } from 'state/action-names';
 
 function config(state = {}, action) {
   let newState = { ...state };
@@ -35,6 +35,9 @@ export function entries(state = [], action) {
     case entryActions.delete:
       newState = reject(newState, v => v.id === action.id);
       break;
+    case containerActions.loadFromStoredContainer:
+      newState = action.entries;
+      break;
     default:
       break;
   };
@@ -56,6 +59,9 @@ export function categories(state = [], action) {
       break;
     case categoryActions.delete:
       newState = reject(newState, v => v.id === action.id);
+      break;
+    case containerActions.loadFromStoredContainer:
+      newState = action.categories;
       break;
     default:
       break;

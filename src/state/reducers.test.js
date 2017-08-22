@@ -1,6 +1,7 @@
 import { entries, categories } from './reducers';
 import { upsertPasswordEntry, deletePasswordEntry } from 'state/actions/entry';
 import { upsertCategory, deleteCategory } from 'state/actions/category';
+import load from 'state/actions/container';
 
 const testEntryState = [
   { id: "abc", name: "account", login: "login" },
@@ -57,4 +58,13 @@ it('should create categories without IDs', () => {
 it('should delete categories', () => {
   const result = categories(testCategoryState, deleteCategory(testCategoryState[1].id));
   expect(result).not.toContain(testCategoryState[1]);
+});
+
+it('should overwrite categories and entries when loading from a stored container', () => {
+  const entries = ["2"];
+  const categories = ["1"];
+  const action = load(entries, categories);
+
+  expect(action.entries).toEqual(entries);
+  expect(action.categories).toEqual(categories);
 });

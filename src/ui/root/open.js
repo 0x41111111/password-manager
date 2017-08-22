@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Header, Segment, Table } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 import { RecentContainerEntry } from 'ui/component/recent-container';
 
-class ContainerPicker extends Component {
+class Picker extends Component {
   render() {
     return (
       <div>
@@ -19,13 +20,19 @@ class ContainerPicker extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            <RecentContainerEntry name="Demo Mode" description="A demonstration container to show off this app's features." />
+            <RecentContainerEntry 
+              name="Demo Mode" 
+              description="A demonstration container to show off this app's features." 
+              onUnlockRequested={() => this.props.history.push('/container/demo/demo')} 
+              deleteDisabled={true} />
           </Table.Body>
         </Table>
       </div>
     );
   };
 };
+
+const ContainerPicker = withRouter(Picker);
 
 // TODO: coloured Google logo/button as per guidelines
 class AuthDialog extends Component {

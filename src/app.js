@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router';
+import { Route, Switch } from 'react-router';
 
 import { PasswordManager } from 'ui/root/manager';
 import { OpenContainer } from 'ui/root/open';
@@ -10,8 +10,10 @@ class App extends Component {
   render() {
     return (
       <div id="app">
-        <Route path='/' component={OpenContainer} />
-        <Route path='/container/:provider/:id' component={PasswordManager} />
+        <Switch>
+          <Route exact path='/' component={OpenContainer} />
+          <Route path='/container/:provider/:id' component={PasswordManager} />
+        </Switch>
       </div>
     );
   }

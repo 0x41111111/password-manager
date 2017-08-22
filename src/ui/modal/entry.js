@@ -17,6 +17,7 @@ class EntryModal extends Component {
     let blankEntry = { name: "", login: "", password: "" };
     let filledEntry = props.entryContents ? props.entryContents : {};
     const entry = { ...blankEntry, ...filledEntry };
+    entry.confirmPassword = filledEntry.password;
 
     this.state = {
       _title: props.entryID !== "" ? "New Entry" : `Editing: ${entry.name} (${entry.login})`,
@@ -53,7 +54,12 @@ class EntryModal extends Component {
   onBeforeSave(event) {
     const id = this.props.entryID ? this.props.entryID : null;
 
-    const entryToDispatch = { id, name: this.state.name, login: this.state.login, password: this.state.password };
+    const entryToDispatch = {
+      id,
+      name: this.state.name,
+      login: this.state.login,
+      password: this.state.password
+    };
 
     this.props.dispatch(upsertPasswordEntry(entryToDispatch));
     this.props.onClose();
@@ -94,9 +100,12 @@ class EntryModal extends Component {
               <Form.Input type="password" name="password" label="Password"
                 placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
                 value={this.state.password} onChange={this.changeHandler} />
+              <Form.Input type="password" name="confirm" label="Confirm Password"
+                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                value={this.state.confirmPassword} onChange={this.changeHandler} />
               <PasswordGeneratorPopup trigger={
                 <Button icon='settings' label='Generate' />
-              } onAccepted={(p) => this.setState({ password: p })} />
+              } onAccepted={(p) => this.setState({ password: p, confirmPassword: p })} />
             </Form>
           </Modal.Content>
           <Modal.Actions>

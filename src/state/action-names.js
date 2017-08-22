@@ -11,3 +11,7 @@ export const categoryActions = {
 export const authActions = {
   setAuthStatus: "AUTH_SET_STATUS"
 };
+
+export const containerActions = {
+  loadFromStoredContainer: "LOAD_FROM_CONTAINER"
+};

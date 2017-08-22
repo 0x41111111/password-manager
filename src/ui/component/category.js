@@ -20,21 +20,19 @@ export class Category extends Component {
 };
 
 class Container extends Component {
-  constructor(props) {
-    super(props);
+  state = { categories: [] };
 
+  componentWillReceiveProps(newProps) {
     let categoriesToRender = [];
-    for (var key in props.categories) {
-      if (props.categories.hasOwnProperty(key)) {
-        var category = props.categories[key];
-        categoriesToRender.push(<Category name={category.name} quantity={0} />);
+    for (var key in newProps.categories) {
+      if (newProps.categories.hasOwnProperty(key)) {
+        var category = newProps.categories[key];
+        categoriesToRender.push(<Category key={category.id} name={category.name} quantity={0} />);
       }
     }
 
-    this.state = {
-      categories: categoriesToRender
-    };
-  };
+    this.setState({ categories: categoriesToRender });
+  }
 
   render() {
     return (
