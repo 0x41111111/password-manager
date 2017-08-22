@@ -36,4 +36,5 @@ jobs:
       # run tests!
       - run: yarn test
 
-
+      # make sure everything builds
+      - run: yarn build
