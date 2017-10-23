@@ -47,6 +47,7 @@ function load(s) {
   })
 }
 
+// For debug purposes
 console.log("appending the Drive SDK");
 
 function handleStateChange(state) {
