@@ -34,6 +34,8 @@ At present, it's still in very early stages and isn't ready for use yet.
       - [x] Redux
       - [ ] Category picker
       - [ ] Validation
+- [ ] Offline functionality
+  - [ ] Service workers
 
 # Setup Instructions
 
