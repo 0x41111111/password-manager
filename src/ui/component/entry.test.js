@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { PasswordEntry } from './entry';
 
+// TODO: add more tests
+
 it('should render without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(<PasswordEntry entry={{ name: "a", login: "b", password: "c" }}

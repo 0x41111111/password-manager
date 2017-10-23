@@ -1,4 +1,4 @@
-A React/Redux based password manager.
+A React/Redux based password manager, designed to be an alternative to other password managers such as KeePass.
 
 At present, it's still in very early stages and isn't ready for use yet.
 
@@ -34,6 +34,8 @@ At present, it's still in very early stages and isn't ready for use yet.
       - [x] Redux
       - [ ] Category picker
       - [ ] Validation
+- [ ] Offline functionality
+  - [ ] Service workers
 
 # Setup Instructions
 
